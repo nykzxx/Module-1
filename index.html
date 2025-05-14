@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+</head>
+<body class="h-screen w-screen bg-neutral-900 flex flex-col gap-5 place-content-center place-items-center">
+
+    <section class="h-fit w-10/12 md:w-100 md:h-fit rounded-xl bg-neutral-800/20 border-neutral-600/40 border px-5 flex flex-col py-3 gap-3">
+
+        <div class="flex flex-row items-center">
+            <h1 class="text-neutral-200 font-bold text-xl">To-Do List</h1>
+        </div>
+
+        <div class="flex place-content-between h-8">
+            <input type="text" id="taskText" class="w-full bg-neutral-800 rounded-full mr-2 px-5 text-white  outline-none transition-all" placeholder="Whats the Task?">
+            <button class="bg-red-600 text-neutral-300 hover:text-red-600 hover:bg-neutral-300 transition-all px-2 rounded-full" onclick="addTask">Create</button>
+        </div>
+    </section>
+
+    <section class="h-70 w-10/12 md:w-100 md:h-80 rounded-xl bg-neutral-800/20 border-neutral-600/40 border px-5 overflow-y-auto" id="tasksContainer">
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>
