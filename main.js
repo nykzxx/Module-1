@@ -34,6 +34,11 @@ function refreshTasks() {
         const button = document.createElement('button');
         button.className = 'text-white font-bold cursor-pointer hover:text-red-700 transition-all';
         button.textContent = 'x';
+        let randomID = Math.random();
+        button.id = randomID ;
+        button.onclick = () => {
+            deleteTask(document.getElementById(randomID))
+        }
 
         // Monta a estrutura
         container.appendChild(label);
@@ -46,13 +51,29 @@ function refreshTasks() {
 }
 
 function addTask(){
-    const taskName = document.getElementById('taskText').value;
-    console.log('Valor Pego');
-    
-    let taskObj = {
-        name: taskName,
-        completed: false
+    if (document.getElementById('taskText').value) {
+        const taskName = document.getElementById('taskText');
+        
+        let taskObj = {
+            name: taskName.value,
+            completed: false
+        }
+        tasks.push(taskObj)
+        console.log('Task created Sucessful! Refreshing tasks...');
+        refreshTasks()
+    } else {
+        alert('Digita a tarefa ne animal')
     }
-    tasks.push(taskObj)
+    
+}
+
+function deleteTask(child) {
+    var parent = child.parentNode;
+    const _searchText = parent.getElementsByTagName('p');
+    const searchText = _searchText[0].innerText;
+
+    tasks.splice(searchText, 1)
     refreshTasks()
+    console.log(tasks);
+    
 }
