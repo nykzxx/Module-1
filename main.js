@@ -49,9 +49,10 @@ function addTask(){
     const taskName = document.getElementById('taskText').value;
     console.log('Valor Pego');
     
-    tasks.push({
+    let taskObj = {
         name: taskName,
         completed: false
-    })
+    }
+    tasks.push(taskObj)
     refreshTasks()
 }
