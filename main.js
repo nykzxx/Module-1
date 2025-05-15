@@ -1,5 +1,13 @@
-const tasks = new Array;
+// Pegando Dados
+const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+refreshTasks()
 
+// Salvando os Dados
+function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Atualizando a Tabela
 function refreshTasks() {
     const div = document.getElementById('tasksContainer');
     while (div.firstChild) {
@@ -18,10 +26,14 @@ function refreshTasks() {
         input.type = 'checkbox';
         input.name = 'todo';
         input.id = 'todo';
-        input.className = 'accent-red-600 text-red-600 bg-gray-100 border-gray-300 rounded-full focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600';
         if (tasks[i].completed){
-          input.classList.add('checked')  
+          input.checked = tasks[i].completed;
         };
+        input.addEventListener('change', () => {
+            tasks[i].completed = input.checked;
+            saveTasks();
+        });
+        input.className = 'accent-red-600 text-red-600 bg-gray-100 border-gray-300 rounded-full focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600';
 
         label.appendChild(input);
 
@@ -34,10 +46,8 @@ function refreshTasks() {
         const button = document.createElement('button');
         button.className = 'text-white font-bold cursor-pointer hover:text-red-700 transition-all';
         button.textContent = 'x';
-        let randomID = Math.random();
-        button.id = randomID ;
         button.onclick = () => {
-            deleteTask(document.getElementById(randomID))
+            deleteTask(i)
         }
 
         // Monta a estrutura
@@ -48,8 +58,10 @@ function refreshTasks() {
         // Exemplo: adicionando no body (você pode adicionar onde quiser)
         document.getElementById('tasksContainer').appendChild(container);
     }
+    saveTasks()
 }
 
+// Criando Tarefa
 function addTask(){
     if (document.getElementById('taskText').value) {
         const taskName = document.getElementById('taskText');
@@ -59,6 +71,7 @@ function addTask(){
             completed: false
         }
         tasks.push(taskObj)
+        document.getElementById('taskText').value = '';
         console.log('Task created Sucessful! Refreshing tasks...');
         refreshTasks()
     } else {
@@ -67,13 +80,9 @@ function addTask(){
     
 }
 
-function deleteTask(child) {
-    var parent = child.parentNode;
-    const _searchText = parent.getElementsByTagName('p');
-    const searchText = _searchText[0].innerText;
-
-    tasks.splice(searchText, 1)
-    refreshTasks()
-    console.log(tasks);
-    
+// Deletando a Tarefa
+function deleteTask(index) {
+    tasks.splice(index, 1);
+    refreshTasks();
+    saveTasks();
 }
